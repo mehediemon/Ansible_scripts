@@ -1,0 +1,14 @@
+---
+- name: Change password for emon user
+  hosts: linux_servers
+  become: yes
+  vars_prompt:
+    - name: new_password
+      prompt: "Enter the new password for emon user:"
+      private: yes
+  tasks:
+    - name: Change password for emon user
+      user:
+        name: user_name
+        password: "{{ new_password | password_hash('sha512') }}"
+        update_password: always
